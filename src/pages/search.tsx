@@ -87,10 +87,10 @@ const Search: NextPage = () => {
 
   return (
     <>
-      <Box ref={box => box && (box.firstChild as any).focus()} >
+      <Box ref={box => box && (box.firstChild as any).focus()}>
         <SearchBox onQueryChange={setQuery} />
       </Box>
-      <Stack h='100vh' spacing='24px'>
+      <Stack h='80vh' spacing='24px' margin='56px 0 0'>
         {!query ?
           <>
             <Stack spacing='16px'>

@@ -22,7 +22,7 @@ const WeatherForecastHome = () => {
   })
 
   return (
-    <Box style={{ columns: '3 372px', columnGap: '24px' }} margin='32px 0 0'>
+    <Box style={{ columns: '3 372px', columnGap: '24px' }} margin='32px 0 24px'>
       <Box className='mock' display='inline-block' w='100%' margin='24px auto 0' padding='12px' borderRadius='10px' height='60vh' bg='#F2F2F7' />
       <Card>
         <Box className='mock' height='126px' bg='#F2F2F7' />
