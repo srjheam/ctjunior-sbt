@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
-      <Box margin={'0 auto'} maxW={'1170px'}>
+      <Box margin={'0 auto'} padding='80px 16px 0' maxW={'1202px'}>
         <Component {...pageProps} />
       </Box>
     </ChakraProvider>
