@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react"
+import { Box, Grid, Text } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { openMeteoApi } from "../../services/axios"
 import { stringifyWeathercode } from "../helpers"
@@ -59,13 +59,15 @@ const WeatherCard = ({ location }: Props) => {
   }, [])
 
   return (
-    <Box h='96px' w='100%' borderRadius='10px' padding='12px' bg='#C4E1FE'>
+    <Grid minH='96px' w='100%' borderRadius='10px' padding='12px' bg='#C4E1FE' gridAutoFlow='column' gridTemplateRows='auto auto auto'>
       <Text>{location.name}, {location.state}</Text>
       <Text>{String(time.getUTCHours() % 24).padStart(2, '0')}:{String(time.getUTCMinutes() % 60).padStart(2, '0')}</Text>
       <Text>{stringifyWeathercode(weathercode)}</Text>
-      <Text>{currentWeather?.temperature}</Text>
-      <WeathercodeIcon weathercode={weathercode} isNight={isNight} />
-    </Box>
+      <Box margin='0 0 0 auto' gridRow='1 / -1'>
+        <Text display='inline-block'>{currentWeather?.temperature}</Text>
+        <WeathercodeIcon weathercode={weathercode} isNight={isNight} />
+      </Box>
+    </Grid>
   )
 }
 
