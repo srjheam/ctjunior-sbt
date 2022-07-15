@@ -2,10 +2,10 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
 import { Box, Center, Spinner, Stack, Text } from '@chakra-ui/react'
-import { geocodingApi } from '../services/axios';
 import useLocalStorageState from 'use-local-storage-state'
 import LocationList from '../common/components/LocationList';
 import SearchBox from '../common/components/SearchBox'
+import { geocodingApi } from '../services/axios';
 import { SELECTED_LOCATION_LOCAL_STORAGE_KEY } from '../common/constants'
 import type { Location } from '../common/types'
 
@@ -90,7 +90,7 @@ const Search: NextPage = () => {
       <Box ref={box => box && (box.firstChild as any).focus()}>
         <SearchBox onQueryChange={setQuery} />
       </Box>
-      <Stack h='80vh' spacing='24px' margin='56px 0 0'>
+      <Stack spacing='24px' margin='56px 0 0'>
         {!query ?
           <>
             <Stack spacing='16px'>
@@ -112,7 +112,7 @@ const Search: NextPage = () => {
                 <LocationList list={queryResults} onClick={handleLocationSelected} />
               </Stack>
               :
-              <Center h='100%'>
+              <Center minH='80vh'>
                 {loading ?
                   <Spinner />
                   :

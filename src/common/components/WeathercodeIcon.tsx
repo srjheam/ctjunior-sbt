@@ -35,10 +35,12 @@ import {
   WiNightAltThunderstorm,
   WiAlien
 } from "react-icons/wi"
+import { getLocalizedDate } from "../helpers"
 
 interface Props {
   weathercode: number
-  isNight: boolean
+  time?: Date,
+  utcOffsetSeconds: number
 }
 
 const iconifyWeathecode = (weathercode: number, isNight: boolean): IconType => 
@@ -102,7 +104,13 @@ const iconifyWeathecode = (weathercode: number, isNight: boolean): IconType =>
     99: WiDaySnowThunderstorm
   })[weathercode] ?? WiAlien
 
-const WeathercodeIcon = ({ weathercode, isNight }: Props) =>
-  <Icon as={iconifyWeathecode(weathercode, isNight)} />
+const WeathercodeIcon = ({ weathercode, time, utcOffsetSeconds }: Props) => {
+  const date = getLocalizedDate(utcOffsetSeconds, time)
+  const isNight = date.getUTCHours() >= 18 || date.getUTCHours() < 6
+
+  return (
+    <Icon as={iconifyWeathecode(weathercode, isNight)} />
+  )
+}
 
 export default WeathercodeIcon

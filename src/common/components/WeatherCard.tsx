@@ -1,8 +1,10 @@
-import { Box, Grid, Text } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
+import { Box, Grid, Text } from "@chakra-ui/react"
+import TemperatureIndicator from "./TemperatureIndicator"
+import TimeClock from "./TimeClock"
+import WeathercodeIcon from "./WeathercodeIcon"
 import { openMeteoApi } from "../../services/axios"
 import { stringifyWeathercode } from "../helpers"
-import WeathercodeIcon from "./WeathercodeIcon"
 import type { Location, CurrentWeather } from "../types"
 
 interface Props {
@@ -33,25 +35,23 @@ const getWeatherCardInfo = async (location: Location): Promise<WeatherCardInfo> 
     return transformed
   })
 
-const getCardTime = (utcOffsetSeconds: number): Date =>
-  new Date(Date.now() + + utcOffsetSeconds * 1000)
-
 const WeatherCard = ({ location }: Props) => {
   const [currentWeather, setCurrentWeather] = useState<CurrentWeather>()
-  const [time, setTime] = useState(getCardTime(0))
+  const [time, setTime] = useState(new Date(Date.now()))
+  const [utcOffsetSeconds, setUtcOffsetSeconds] = useState(0)
 
   const weathercode = currentWeather?.weathercode ?? 0
-  const isNight = time.getUTCHours() < 6 || time.getUTCHours() > 18
+  const temperature = currentWeather?.temperature ?? 0
 
   useEffect(() => {
-    let timer:NodeJS.Timer
+    const timer = setInterval(() => (
+      setTime(new Date())
+    ), 1000)
 
     const getInfo = async () => {
       const result = await getWeatherCardInfo(location)
+      setUtcOffsetSeconds(result.utcOffsetSeconds)
       setCurrentWeather(result.currentWeather)
-      timer = setInterval(() =>
-        setTime(getCardTime(result.utcOffsetSeconds)
-      ), 1000);
     }
     getInfo()
 
@@ -61,11 +61,11 @@ const WeatherCard = ({ location }: Props) => {
   return (
     <Grid minH='96px' w='100%' borderRadius='10px' padding='12px' bg='#C4E1FE' gridAutoFlow='column' gridTemplateRows='auto auto auto'>
       <Text>{location.name}, {location.state}</Text>
-      <Text>{String(time.getUTCHours() % 24).padStart(2, '0')}:{String(time.getUTCMinutes() % 60).padStart(2, '0')}</Text>
+      <TimeClock time={time} utcOffsetSeconds={utcOffsetSeconds} />
       <Text>{stringifyWeathercode(weathercode)}</Text>
       <Box margin='0 0 0 auto' gridRow='1 / -1'>
-        <Text display='inline-block'>{currentWeather?.temperature}</Text>
-        <WeathercodeIcon weathercode={weathercode} isNight={isNight} />
+        <TemperatureIndicator temperature={temperature} />
+        <WeathercodeIcon weathercode={weathercode} utcOffsetSeconds={utcOffsetSeconds} />
       </Box>
     </Grid>
   )

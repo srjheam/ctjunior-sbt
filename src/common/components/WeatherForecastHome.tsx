@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react"
 import useLocalStorageState from "use-local-storage-state";
 import Card from "./Card";
+import CurrentWeatherCard from "./CurrentWeatherCard";
 import HourlyWeather from "./HourlyWeather";
 import { SELECTED_LOCATION_LOCAL_STORAGE_KEY } from '../constants';
 import type { Location } from '../types'
@@ -18,13 +19,13 @@ function getFallbackLocation(): Location {
 }
 
 const WeatherForecastHome = () => {
-  const [location, setLocation] = useLocalStorageState<Location>(SELECTED_LOCATION_LOCAL_STORAGE_KEY, {
+  const [location] = useLocalStorageState<Location>(SELECTED_LOCATION_LOCAL_STORAGE_KEY, {
     defaultValue: getFallbackLocation()
   })
 
   return (
     <Box style={{ columns: '3 372px', columnGap: '24px' }} margin='32px 0 24px'>
-      <Box className='mock' display='inline-block' w='100%' margin='24px auto 0' padding='12px' borderRadius='10px' height='60vh' bg='#F2F2F7' />
+      <CurrentWeatherCard location={location} />
       <Card>
         <HourlyWeather location={location} />
       </Card>

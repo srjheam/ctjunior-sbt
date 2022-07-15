@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
-import { Box, Center, Flex, HStack, Text } from "@chakra-ui/react"
+import { Center, HStack } from "@chakra-ui/react"
+import TemperatureIndicator from "./TemperatureIndicator"
+import TimeClock from "./TimeClock"
+import WeathercodeIcon from "./WeathercodeIcon"
 import { openMeteoApi } from "../../services/axios"
 import type { Location } from "../types"
-import WeathercodeIcon from "./WeathercodeIcon"
 
 interface HourlyData {
   utcOffsetSeconds: number
@@ -43,8 +45,8 @@ const HourlyWeather = ({ location }: { location: Location }) => {
     const fetchData = async () => {
       const data = await getHourlyWeatherData(location)
 
-      // remove all hourly forecast data before current time in Location AND after 6am next day
-      const start = data.time.findIndex(x => x.getHours() === getHoursNow(data.utcOffsetSeconds))
+      // remove all hourly forecast data equals to and before current time in Location AND after 6am next day
+      const start = data.time.findIndex(x => x.getHours() > getHoursNow(data.utcOffsetSeconds))
       const end = data.time.findIndex(x => x.getDate() !== getDateNow(data.utcOffsetSeconds) && x.getHours() > 6)
       data.time = data.time.slice(start, end)
       data.temperature = data.temperature.slice(start, end)
@@ -60,9 +62,9 @@ const HourlyWeather = ({ location }: { location: Location }) => {
     <HStack spacing='16px' overflow='auto' padding='0 0 8px'>
       {info?.time.map((x, i) =>
         <Center key={x.getTime()} flexDirection='column' gap='8px'>
-          <Text>{Math.round(info?.temperature[i])}º</Text>
-          <WeathercodeIcon weathercode={info?.weathercode[i]} isNight={x.getHours() < 6 || x.getHours() >= 18} />
-          <Text>{String(x.getHours() % 24).padStart(2, '0')}:{String(x.getMinutes() % 60).padStart(2, '0')}</Text>
+          <TemperatureIndicator temperature={info?.temperature[i]} />
+          <WeathercodeIcon weathercode={info?.weathercode[i]} time={x} utcOffsetSeconds={info?.utcOffsetSeconds} />
+          <TimeClock time={x} utcOffsetSeconds={info?.utcOffsetSeconds} />
         </Center>
       )}
     </HStack>

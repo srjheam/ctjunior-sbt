@@ -1,3 +1,6 @@
+export const getLocalizedDate = (utcOffsetSeconds: number, date?: Date): Date =>
+  new Date((date ?? new Date(Date.now())).getTime() + utcOffsetSeconds * 1000)
+
 export const stringifyWeathercode = (weathercode: number):string => ({
     0: 'Céu claro',
     1: 'Claro, com nuvens',
