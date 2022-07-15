@@ -30,6 +30,8 @@ const searchByQuery = async (query: string): Promise<Location[]> =>
       return transformed
     })
   )
+  .then(locations =>
+    locations.filter(x => typeof x.timezone !== 'undefined'))
   .catch(() =>
     []
   )
