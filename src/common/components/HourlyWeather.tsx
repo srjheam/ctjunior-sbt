@@ -28,12 +28,12 @@ const getHourlyWeatherData = async (location: Location) =>
   })
   .then(hourly => {
     hourly.temperature = hourly.temperature_2m
-    hourly.time = hourly.time.map((x: string) => new Date(x))
+    hourly.time = hourly.time.map((x: string) => new Date(x + 'Z'))
     return hourly as HourlyData
   })
   
-const getHoursNow = (utcOffsetSeconds: number) =>
-  (new Date(Date.now() + utcOffsetSeconds * 1000)).getUTCHours()
+const getTimeNow = (utcOffsetSeconds: number) =>
+  (new Date(Date.now() + utcOffsetSeconds * 1000)).getTime()
 
 const getDateNow = (utcOffsetSeconds: number) =>
   (new Date(Date.now() + utcOffsetSeconds * 1000)).getUTCDate()
@@ -46,8 +46,8 @@ const HourlyWeather = ({ location }: { location: Location }) => {
       const data = await getHourlyWeatherData(location)
 
       // remove all hourly forecast data equals to and before current time in Location AND after 6am next day
-      const start = data.time.findIndex(x => x.getHours() > getHoursNow(data.utcOffsetSeconds))
-      const end = data.time.findIndex(x => x.getDate() !== getDateNow(data.utcOffsetSeconds) && x.getHours() > 6)
+      const start = data.time.findIndex(x => x.getTime() > getTimeNow(data.utcOffsetSeconds))
+      const end = data.time.findIndex(x => x.getUTCDate() > getDateNow(data.utcOffsetSeconds) && x.getUTCHours() > 6)
       data.time = data.time.slice(start, end)
       data.temperature = data.temperature.slice(start, end)
       data.weathercode = data.weathercode.slice(start, end)
@@ -64,7 +64,7 @@ const HourlyWeather = ({ location }: { location: Location }) => {
         <Center key={x.getTime()} flexDirection='column' gap='8px'>
           <TemperatureIndicator temperature={info?.temperature[i]} />
           <WeathercodeIcon weathercode={info?.weathercode[i]} time={x} utcOffsetSeconds={info?.utcOffsetSeconds} />
-          <TimeClock time={x} utcOffsetSeconds={info?.utcOffsetSeconds} />
+          <TimeClock time={x} />
         </Center>
       )}
     </HStack>
