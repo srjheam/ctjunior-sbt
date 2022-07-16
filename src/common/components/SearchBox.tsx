@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { Input } from "@chakra-ui/react"
+import { Icon, Input, InputGroup, InputLeftElement } from "@chakra-ui/react"
+import { MdSearch } from "react-icons/md"
 import type { Dispatcher } from "../types"
 
 interface Props {
@@ -18,7 +19,12 @@ const SearchBox = ({onQueryChange}: Props) => {
   }, [debouncedInput])
 
   return (
-    <Input type={'text'} value={debouncedInput} onChange={e => setDebouncedInput(e.target.value)} />
+    <InputGroup>
+      <InputLeftElement pointerEvents='none'>
+        <Icon as={MdSearch} />
+      </InputLeftElement>
+      <Input type={'text'} value={debouncedInput} onChange={e => setDebouncedInput(e.target.value)} placeholder='Procurar por cidade...' />
+    </InputGroup>
   )
 }
 
