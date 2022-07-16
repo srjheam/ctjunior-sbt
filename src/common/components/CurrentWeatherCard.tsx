@@ -77,7 +77,7 @@ const CurrentWeatherCard = ({ location }: { location: Location }) => {
       <Flex direction='column' height='100%'>
         <Center>
           <HStack spacing='8px'>
-            <Icon as={MdOutlinePlace} />
+            <Icon as={MdOutlinePlace} width='20px' h='20px' />
             <Text>{location.name}, {location.state}</Text>
           </HStack>
           <Spacer />
@@ -92,7 +92,7 @@ const CurrentWeatherCard = ({ location }: { location: Location }) => {
         </Center>
         <Center>
           <HStack spacing='4px'>
-            <Icon as={MdOutlineWaterDrop} />
+            <Icon as={MdOutlineWaterDrop} width='20px' h='20px' />
             <Text>{currentPrecipitationSum} mm</Text>
           </HStack>
           <Spacer />

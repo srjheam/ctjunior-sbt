@@ -21,7 +21,7 @@ const SearchBox = ({onQueryChange}: Props) => {
   return (
     <InputGroup>
       <InputLeftElement pointerEvents='none'>
-        <Icon as={MdSearch} />
+        <Icon as={MdSearch} width='28px' h='28px' />
       </InputLeftElement>
       <Input type={'text'} value={debouncedInput} onChange={e => setDebouncedInput(e.target.value)} placeholder='Procurar por cidade...' />
     </InputGroup>

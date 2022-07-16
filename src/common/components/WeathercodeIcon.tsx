@@ -109,7 +109,7 @@ const WeathercodeIcon = ({ weathercode, time, utcOffsetSeconds }: Props) => {
   const isNight = date.getUTCHours() >= 18 || date.getUTCHours() < 6
 
   return (
-    <Icon as={iconifyWeathecode(weathercode, isNight)} />
+    <Icon as={iconifyWeathecode(weathercode, isNight)} width='40px' h='40px' />
   )
 }
 

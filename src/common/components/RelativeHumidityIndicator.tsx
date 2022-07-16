@@ -39,7 +39,7 @@ const getRelativeHumidityNow = async (location: Location) =>
     return (
       <Center flexDirection='column'>
         <Text textAlign='center'>Umidade relativa</Text>
-        <Icon as={WiHumidity} />
+        <Icon as={WiHumidity} width='40px' h='40px' />
         <Text>{relativeHumidity}%</Text>
       </Center>
     )

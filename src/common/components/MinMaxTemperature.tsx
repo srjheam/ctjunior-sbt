@@ -10,11 +10,11 @@ interface Props {
 const MaxMinTemperature = ({ max, min }: Props) =>
   <HStack spacing='8px'>
     <HStack spacing='4px'>
-      <Icon as={MdOutlineKeyboardArrowUp} />
+      <Icon as={MdOutlineKeyboardArrowUp} width='20px' h='20px' />
       <TemperatureIndicator temperature={max} />
     </HStack>
     <HStack spacing='4px'>
-      <Icon as={MdOutlineKeyboardArrowDown} />
+      <Icon as={MdOutlineKeyboardArrowDown} width='20px' h='20px' />
       <TemperatureIndicator temperature={min} />
     </HStack>
   </HStack>
