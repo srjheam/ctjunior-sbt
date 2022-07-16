@@ -1,8 +1,9 @@
-import { Box } from "@chakra-ui/react"
+import { Box, Center } from "@chakra-ui/react"
 import useLocalStorageState from "use-local-storage-state";
 import Card from "./Card";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import HourlyWeather from "./HourlyWeather";
+import RelativeHumidityIndicator from "./RelativeHumidityIndicator";
 import { SELECTED_LOCATION_LOCAL_STORAGE_KEY } from '../constants';
 import type { Location } from '../types'
 
@@ -36,7 +37,9 @@ const WeatherForecastHome = () => {
         <Box className='mock' height='146px' bg='#F2F2F7' />
       </Card>
       <Card>
-        <Box className='mock' height='157px' bg='#F2F2F7' />
+        <Center>
+          <RelativeHumidityIndicator location={location} />
+        </Center>
       </Card>
     </Box>
   )
