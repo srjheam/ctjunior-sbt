@@ -25,16 +25,10 @@ const WeatherForecastHome = () => {
   })
 
   return (
-    <Box style={{ columns: '3 372px', columnGap: '24px' }} margin='32px 0 24px'>
+    <Box style={{ columns: '2 372px', columnGap: '24px' }} margin='32px 0 24px'>
       <CurrentWeatherCard location={location} />
       <Card>
         <HourlyWeather location={location} />
-      </Card>
-      <Card>
-        <Box className='mock' height='404px' bg='#F2F2F7' />
-      </Card>
-      <Card>
-        <Box className='mock' height='146px' bg='#F2F2F7' />
       </Card>
       <Card>
         <Center>

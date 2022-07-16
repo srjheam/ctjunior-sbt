@@ -95,10 +95,10 @@ const Search: NextPage = () => {
       <Stack spacing='24px' margin='56px 0 0'>
         {!query ?
           <>
-            <Stack spacing='16px'>
+            {/*<Stack spacing='16px'>
               <Text>Sua localização</Text>
-              { /* <WeatherCard /> */ }
-            </Stack>
+              { /* <WeatherCard />
+            </Stack> */}
             {recentLocations.length !== 0 &&
               <Stack spacing='16px'>
                 <Text>Recentes</Text>
